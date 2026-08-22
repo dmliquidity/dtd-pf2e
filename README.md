@@ -67,10 +67,17 @@ Example `Note` for *reeling*:
 
 ## Magic items
 
-| Item | Level | Price | Notes |
-|---|---|---|---|
-| Flicker's Staff | 6 | 230 gp | Uncommon staff. Cantrips *telekinetic hand* and *telekinetic rend*; *soothe* at 1st and 2nd rank |
-| Flicker's Staff (Sectioned) | 8 | 735 gp | The same staff after Murkal's work: a *+1 sectioned staff*, adding 3rd-rank *soothe* |
+| Item | Level | Price | Runes | Spells |
+|---|---|---|---|---|
+| Flicker's Staff | 6 | 230 gp | — | Cantrips *telekinetic hand*, *telekinetic rend*; *soothe* 1st–2nd |
+| Flicker's Staff (Sectioned) | 8 | 735 gp | +1 *sectioned* | adds *soothe* 3rd |
+| Flicker's Staff (Striking) | 10 | 1,250 gp | +1 striking *sectioned* | adds *breathe fire*, *blazing bolt*, *fireball*, *ice storm* |
+| Flicker's Staff (Flaming) | 12 | 3,550 gp | +2 striking *flaming* *sectioned* | adds *howling blizzard* |
+
+FlickerStitch's signature item, as an upgrade path. Ranked spells follow The Oscillating Wave's granted list, so
+everything on the staves is already on his spell list. Prices are the official staff curve for the highest spell
+rank, plus rune costs.
+
 
 Staff spell lists are read from the item description's `@UUID` list — the same format the
 official staves use — so the [PF2e Staves](https://github.com/reonZ/pf2e-staves) module picks

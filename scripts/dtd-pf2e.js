@@ -65,10 +65,13 @@ async function install({ notify = true } = {}) {
     }
 
     await game.settings.set(MODULE_ID, "installed", true);
+    await game.settings.set(MODULE_ID, "installedVersion", game.modules.get(MODULE_ID).version);
     if (notify) {
         ui.notifications.info(
-            `DTD PF2e: ${toCreate.length} item(s) installed into the "${FOLDER_NAME}" folder` +
-                (journalCreated ? ", plus the rune reference journal." : ".")
+            toCreate.length || journalCreated
+                ? `DTD PF2e: ${toCreate.length} item(s) installed into the "${FOLDER_NAME}" folder` +
+                  (journalCreated ? ", plus the rune reference journal." : ".")
+                : "DTD PF2e: content already up to date."
         );
     }
     return { created: toCreate.length, journal: journalCreated, macro: macro?.name };
@@ -117,9 +120,17 @@ Hooks.once("init", () => {
         default: false,
     });
 
+    game.settings.register(MODULE_ID, "installedVersion", {
+        name: "Installed content version",
+        scope: "world",
+        config: false,
+        type: String,
+        default: "",
+    });
+
     game.settings.register(MODULE_ID, "autoInstall", {
         name: "Install content automatically",
-        hint: "Create the DTD PF2e items and macro in this world the first time the module loads.",
+        hint: "Create the DTD PF2e content in this world on first load, and add anything new after a module update.",
         scope: "world",
         config: true,
         type: Boolean,
@@ -132,7 +143,11 @@ Hooks.once("ready", async () => {
 
     if (!game.user.isGM) return;
     if (!game.settings.get(MODULE_ID, "autoInstall")) return;
-    if (game.settings.get(MODULE_ID, "installed")) return;
+
+    // Re-runs after a module update so new content lands in existing worlds.
+    // Nothing is duplicated: install() skips items already present by slug.
+    const version = game.modules.get(MODULE_ID).version;
+    if (game.settings.get(MODULE_ID, "installedVersion") === version) return;
 
     await install({ notify: true });
 });

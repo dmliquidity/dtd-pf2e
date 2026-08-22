@@ -25,8 +25,9 @@ ln -s /home/michael/Documents/7dosp/modules/dtd-pf2e \
 Upload* option. The folder name must stay `dtd-pf2e`, matching the `id` in `module.json`.
 
 On first load in a world, a GM gets the module's items in a **DTD PF2e** item folder, a
-**DTD Homebrew Runes** journal, and a **Sectioned: Unfold / Refold** macro. Turn that off
-with the *Install content automatically* setting, or re-run it any time:
+**DTD Homebrew Runes** journal, and a **Sectioned: Unfold / Refold** macro. It runs again
+after a module update so new content reaches worlds that already have it installed. Turn
+that off with the *Install content automatically* setting, or re-run it any time:
 
 ```js
 game.modules.get("dtd-pf2e").api.install();
@@ -64,6 +65,16 @@ Example `Note` for *reeling*:
 }
 ```
 
+## Magic items
+
+| Item | Level | Price | Notes |
+|---|---|---|---|
+| Flicker's Staff | 8 | 450 gp | Uncommon staff. Cantrips *telekinetic hand* and *telekinetic rend*; *soothe* at 1st, 2nd, and 3rd rank |
+
+Staff spell lists are read from the item description's `@UUID` list — the same format the
+official staves use — so the [PF2e Staves](https://github.com/reonZ/pf2e-staves) module picks
+them up automatically if you use it.
+
 ## Sectioned
 
 The one rune with moving parts. The weapon unfolds into chain-linked segments: it gains
@@ -96,7 +107,8 @@ dtd-pf2e/
 ├── module.json
 ├── README.md
 ├── data/
-│   ├── items.json      Effect: Sectioned (Unfolded), Unfold Sectioned Weapon
+│   ├── items.json      Effect: Sectioned (Unfolded), Unfold Sectioned Weapon,
+│   │                   Flicker's Staff
 │   └── journal.json    DTD Homebrew Runes reference
 └── scripts/
     └── dtd-pf2e.js     install() + toggleSectioned()

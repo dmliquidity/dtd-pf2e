@@ -1,0 +1,125 @@
+{
+  "items": [
+    {
+      "name": "Effect: Sectioned (Unfolded)",
+      "type": "effect",
+      "img": "icons/commodities/treasure/token-runed-mem-red.webp",
+      "system": {
+        "description": {
+          "gm": "",
+          "value": "<p>Granted by the <em>sectioned</em> rune. The weapon has separated into linked segments joined by fine chain.</p><hr /><p>The weapon gains the <strong>reach</strong> trait. You take a &minus;2 circumstance penalty to Strikes against adjacent creatures (applied automatically when a target is within 5 feet). When you critically hit with the unfolded weapon, the target takes 1d4 persistent bleed damage.</p><p>Refolding the weapon is an Interact action &mdash; delete this effect, or use the <em>Sectioned: Unfold / Refold</em> macro.</p>"
+        },
+        "duration": {
+          "value": -1,
+          "unit": "unlimited",
+          "sustained": false,
+          "expiry": null
+        },
+        "level": {
+          "value": 6
+        },
+        "publication": {
+          "title": "DTD PF2e",
+          "authors": "",
+          "license": "ORC",
+          "remaster": true
+        },
+        "rules": [
+          {
+            "key": "ChoiceSet",
+            "flag": "dtdSectionedWeapon",
+            "prompt": "PF2E.SpecificRule.Prompt.Weapon",
+            "choices": {
+              "ownedItems": true,
+              "types": [
+                "weapon"
+              ]
+            }
+          },
+          {
+            "key": "AdjustStrike",
+            "mode": "add",
+            "property": "weapon-traits",
+            "value": "reach",
+            "definition": [
+              "item:id:{item|flags.system.rulesSelections.dtdSectionedWeapon}"
+            ]
+          },
+          {
+            "key": "FlatModifier",
+            "selector": "attack-roll",
+            "type": "circumstance",
+            "value": -2,
+            "label": "Sectioned: Adjacent Target",
+            "predicate": [
+              "item:id:{item|flags.system.rulesSelections.dtdSectionedWeapon}",
+              {
+                "lte": [
+                  "target:distance",
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "key": "DamageDice",
+            "selector": "strike-damage",
+            "diceNumber": 1,
+            "dieSize": "d4",
+            "damageType": "bleed",
+            "category": "persistent",
+            "critical": true,
+            "label": "Sectioned",
+            "predicate": [
+              "item:id:{item|flags.system.rulesSelections.dtdSectionedWeapon}"
+            ]
+          }
+        ],
+        "start": {
+          "value": 0,
+          "initiative": null
+        },
+        "tokenIcon": {
+          "show": true
+        },
+        "traits": {
+          "rarity": "common",
+          "value": []
+        },
+        "slug": "effect-sectioned-unfolded"
+      }
+    },
+    {
+      "name": "Unfold Sectioned Weapon",
+      "type": "action",
+      "img": "icons/commodities/treasure/token-runed-mem-red.webp",
+      "system": {
+        "actionType": {
+          "value": "action"
+        },
+        "actions": {
+          "value": 1
+        },
+        "category": "interaction",
+        "description": {
+          "gm": "",
+          "value": "<p>Your <em>sectioned</em> weapon separates into linked segments joined by fine chain, or draws back together into a single solid weapon.</p><hr /><p><strong>Effect</strong> Toggle the <em>Effect: Sectioned (Unfolded)</em> effect on yourself. While unfolded, the weapon gains the reach trait, you take a &minus;2 circumstance penalty to Strikes against adjacent creatures, and critical hits deal 1d4 persistent bleed damage.</p>"
+        },
+        "publication": {
+          "title": "DTD PF2e",
+          "authors": "",
+          "license": "ORC",
+          "remaster": true
+        },
+        "rules": [],
+        "traits": {
+          "rarity": "common",
+          "value": [
+            "manipulate"
+          ]
+        },
+        "slug": "unfold-sectioned-weapon"
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "dtd-pf2e",
+  "title": "DTD PF2e",
+  "description": "Deathtrap Dungeons homebrew content for Pathfinder 2e. Currently ships the custom weapon property runes used in the Seven Dooms for Sandpoint game, including full automation for the <em>sectioned</em> rune (chain-linked weapon: reach, adjacent-target penalty, and persistent bleed on a critical hit).",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Deathtrap Dungeons"
+    }
+  ],
+  "esmodules": [
+    "scripts/dtd-pf2e.js"
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "8.0.0"
+        }
+      }
+    ]
+  },
+  "socket": false,
+  "url": "https://github.com/dmliquidity/dtd-pf2e",
+  "manifest": "https://github.com/dmliquidity/dtd-pf2e/releases/latest/download/module.json",
+  "download": "https://github.com/dmliquidity/dtd-pf2e/releases/latest/download/module.zip",
+  "readme": "https://github.com/dmliquidity/dtd-pf2e/blob/main/README.md",
+  "bugs": "https://github.com/dmliquidity/dtd-pf2e/issues",
+  "license": "https://github.com/dmliquidity/dtd-pf2e/blob/main/LICENSE"
+}

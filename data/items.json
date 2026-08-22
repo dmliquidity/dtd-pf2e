@@ -145,8 +145,8 @@
           "die": "d4"
         },
         "description": {
-          "gm": "<p><strong>Continuity.</strong> FlickerStitch currently carries a <em>Sectioned Stave of Soothe (Rank 2)</em> (item 5, 410 gp) &mdash; a wand with one casting per day. This staff is its successor: charges instead of a single casting, <em>soothe</em> up to 3rd rank, and his two psi cantrips on tap.</p><p>Item 8 is above his current level 5. Fine for a signature NPC item, but if it should track his level, drop <em>soothe</em> to 2nd rank and it becomes item 6 at roughly 230 gp.</p><p>To make it <em>sectioned</em> as well, add the rune to the name and price: 700 gp total, still item 8.</p>",
-          "value": "<p>Two feet of driftwood ash off Junker's Edge, sanded pale by the sea and mended in four places with copper wire and boot-leather. FlickerStitch made it the way he was made: out of parts nobody wanted, stitched together, working anyway.</p><p>Every clear inch of the shaft is covered in tiny, painstaking goblin script &mdash; names, mostly, written small so that more will fit. He will tell you it is a list of everyone he has patched up. It is also a list of everyone he has decided to keep.</p><p>The brass cage at the head holds nothing at all. Whatever was set in it washed up somewhere else, or never existed; a pale light gathers there regardless when the staff is used &mdash; the same flicker that sits behind his eyes.</p><blockquote><p>\"Staff not magic. Staff is REMEMBERING. Flicker write down who not-die, and then they keep on not-dying. Is a system.\"</p></blockquote><hr /><p><strong>Activate</strong> Cast a Spell</p><p><strong>Effect</strong> You expend a number of charges from the staff to cast a spell from its list.</p><ul><li><strong>Cantrip</strong> @UUID[Compendium.pf2e.spells-srd.Item.pwzdSlJgYqN7bs2w]{Telekinetic Hand} @UUID[Compendium.pf2e.spells-srd.Item.yyz029C9eqfY38PT]{Telekinetic Rend}</li><li><strong>1st</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li><li><strong>2nd</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li><li><strong>3rd</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li></ul><hr /><p><strong>Craft Requirements</strong> Supply one casting of all listed ranks of all listed spells.</p>"
+          "gm": "<p><strong>Continuity.</strong> Successor to FlickerStitch's <em>Sectioned Stave of Soothe (Rank 2)</em> (item 5, 410 gp): charges instead of one casting a day, plus his two psi cantrips.</p><p>Item 6 / 230 gp is the official curve for a staff topping out at 2nd-rank spells (Librarian Staff 225 gp, Staff of Control 230 gp). It sits one level above him at 5, which is normal for a signature item.</p><p><strong>Upgrade path:</strong> <em>Flicker's Staff (Sectioned)</em> &mdash; item 8, adds 3rd-rank <em>soothe</em> and the <em>sectioned</em> rune.</p>",
+          "value": "<p>Two feet of driftwood ash off Junker's Edge, sanded pale by the sea and mended in four places with copper wire and boot-leather. FlickerStitch made it the way he was made: out of parts nobody wanted, stitched together, working anyway.</p><p>Every clear inch of the shaft is covered in tiny, painstaking goblin script &mdash; names, mostly, written small so that more will fit. He will tell you it is a list of everyone he has patched up. It is also a list of everyone he has decided to keep.</p><p>The brass cage at the head holds nothing at all. Whatever was set in it washed up somewhere else, or never existed; a pale light gathers there regardless when the staff is used &mdash; the same flicker that sits behind his eyes.</p><blockquote><p>\"Staff not magic. Staff is REMEMBERING. Flicker write down who not-die, and then they keep on not-dying. Is a system.\"</p></blockquote><hr /><p><strong>Activate</strong> Cast a Spell</p><p><strong>Effect</strong> You expend a number of charges from the staff to cast a spell from its list.</p><ul><li><strong>Cantrip</strong> @UUID[Compendium.pf2e.spells-srd.Item.pwzdSlJgYqN7bs2w]{Telekinetic Hand} @UUID[Compendium.pf2e.spells-srd.Item.yyz029C9eqfY38PT]{Telekinetic Rend}</li><li><strong>1st</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li><li><strong>2nd</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li></ul><hr /><p><strong>Craft Requirements</strong> Supply one casting of all listed ranks of all listed spells.</p>"
         },
         "expend": null,
         "grade": null,
@@ -157,7 +157,7 @@
           "value": 0
         },
         "level": {
-          "value": 8
+          "value": 6
         },
         "material": {
           "grade": null,
@@ -165,7 +165,7 @@
         },
         "price": {
           "value": {
-            "gp": 450
+            "gp": 230
           }
         },
         "publication": {
@@ -201,6 +201,91 @@
           "value": "held-in-one-hand"
         },
         "slug": "flickers-staff",
+        "equipped": {
+          "carryType": "worn"
+        }
+      }
+    },
+    {
+      "name": "Flicker's Staff (Sectioned)",
+      "type": "weapon",
+      "img": "icons/weapons/staves/staff-ornate-red.webp",
+      "system": {
+        "ammo": null,
+        "baseItem": "staff",
+        "bonus": {
+          "value": 0
+        },
+        "bonusDamage": {
+          "value": 0
+        },
+        "bulk": {
+          "value": 1
+        },
+        "category": "simple",
+        "containerId": null,
+        "damage": {
+          "damageType": "bludgeoning",
+          "dice": 1,
+          "die": "d4"
+        },
+        "description": {
+          "gm": "<p><strong>Upgrade of <em>Flicker's Staff</em></strong> (item 6, 230 gp): adds 3rd-rank <em>soothe</em> and the <em>sectioned</em> rune. Price is the item-8 staff (450 gp, matching Staff of Healing (Greater) at 470 gp) plus the rune's 250 gp.</p><p>As a specific magic item it carries the <em>sectioned</em> rune without a potency rune. If you'd rather hold to the normal rune rules, add <em>+1 weapon potency</em> for 35 gp and call it a <em>+1 sectioned staff</em>.</p><p><strong>In Foundry:</strong> the unfold/refold automation is the module's <em>Effect: Sectioned (Unfolded)</em> &mdash; run the <em>Sectioned: Unfold / Refold</em> macro and pick this staff at the prompt.</p>",
+          "value": "<p>Two feet of driftwood ash off Junker's Edge, sanded pale by the sea and mended in four places with copper wire and boot-leather. FlickerStitch made it the way he was made: out of parts nobody wanted, stitched together, working anyway.</p><p>Every clear inch of the shaft is covered in tiny, painstaking goblin script &mdash; names, mostly, written small so that more will fit. He will tell you it is a list of everyone he has patched up. It is also a list of everyone he has decided to keep.</p><p>The brass cage at the head holds nothing at all. Whatever was set in it washed up somewhere else, or never existed; a pale light gathers there regardless when the staff is used &mdash; the same flicker that sits behind his eyes.</p><blockquote><p>\"Staff not magic. Staff is REMEMBERING. Flicker write down who not-die, and then they keep on not-dying. Is a system.\"</p></blockquote><p>Since the Boutique's work, the shaft comes apart into seven brass-collared segments strung on fine chain. Folded, it is a staff. Unfolded, it is two feet of weighted links that reaches across a room and comes back with somebody's blood on it. He mended it the way he mends everything, and then Murkal sold him a stone that made the mending the point.</p><blockquote><p>\"Staff was broke. Flicker fix. Staff still broke, only now on PURPOSE. Best kind of fix.\"</p></blockquote><hr /><p><strong>Activate</strong> Cast a Spell</p><p><strong>Effect</strong> You expend a number of charges from the staff to cast a spell from its list.</p><ul><li><strong>Cantrip</strong> @UUID[Compendium.pf2e.spells-srd.Item.pwzdSlJgYqN7bs2w]{Telekinetic Hand} @UUID[Compendium.pf2e.spells-srd.Item.yyz029C9eqfY38PT]{Telekinetic Rend}</li><li><strong>1st</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li><li><strong>2nd</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li><li><strong>3rd</strong> @UUID[Compendium.pf2e.spells-srd.Item.szIyEsvihc5e1w8n]{Soothe}</li></ul><hr /><p>The staff bears the <em>sectioned</em> rune.</p><p><strong>Activate&mdash;Unfold</strong> <span class=\"action-glyph\">1</span> Interact</p><p><strong>Effect</strong> The weapon separates into linked segments joined by fine chain. While unfolded it gains the reach trait, but you take a &minus;2 circumstance penalty to Strikes against adjacent creatures. When you critically hit with the unfolded weapon, the target takes 1d4 persistent bleed damage. Refolding is another Interact action.</p><hr /><p><strong>Craft Requirements</strong> Supply one casting of all listed ranks of all listed spells.</p>"
+        },
+        "expend": null,
+        "grade": null,
+        "group": "club",
+        "hardness": 0,
+        "hp": {
+          "max": 0,
+          "value": 0
+        },
+        "level": {
+          "value": 8
+        },
+        "material": {
+          "grade": null,
+          "type": null
+        },
+        "price": {
+          "value": {
+            "gp": 700
+          }
+        },
+        "publication": {
+          "title": "DTD PF2e",
+          "authors": "",
+          "license": "ORC",
+          "remaster": true
+        },
+        "quantity": 1,
+        "range": null,
+        "reload": {
+          "value": null
+        },
+        "rules": [],
+        "runes": {
+          "potency": 0,
+          "property": [],
+          "striking": 0
+        },
+        "size": "med",
+        "splashDamage": {
+          "value": 0
+        },
+        "traits": {
+          "rarity": "uncommon",
+          "value": [
+            "magical",
+            "staff",
+            "two-hand-d8"
+          ]
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "slug": "flickers-staff-sectioned",
         "equipped": {
           "carryType": "worn"
         }

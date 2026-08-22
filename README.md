@@ -69,7 +69,8 @@ Example `Note` for *reeling*:
 
 | Item | Level | Price | Notes |
 |---|---|---|---|
-| Flicker's Staff | 8 | 450 gp | Uncommon staff. Cantrips *telekinetic hand* and *telekinetic rend*; *soothe* at 1st, 2nd, and 3rd rank |
+| Flicker's Staff | 6 | 230 gp | Uncommon staff. Cantrips *telekinetic hand* and *telekinetic rend*; *soothe* at 1st and 2nd rank |
+| Flicker's Staff (Sectioned) | 8 | 700 gp | The same staff after Murkal's work: adds 3rd-rank *soothe* and the *sectioned* rune |
 
 Staff spell lists are read from the item description's `@UUID` list — the same format the
 official staves use — so the [PF2e Staves](https://github.com/reonZ/pf2e-staves) module picks

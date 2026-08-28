@@ -1,8 +1,8 @@
 {
   "id": "dtd-pf2e",
   "title": "DTD PF2e",
-  "description": "Deathtrap Dungeons homebrew content for Pathfinder 2e. Custom weapon property runes with rule-element automation for the sectioned rune, plus homebrew magic items for the Seven Dooms for Sandpoint game.",
-  "version": "1.3.0",
+  "description": "Deathtrap Dungeons homebrew content for Pathfinder 2e. Custom weapon property runes with rule-element automation for the sectioned rune, homebrew magic items for the Seven Dooms for Sandpoint game, and an /inventory chat command that restocks the selected shop at any level.",
+  "version": "1.4.0",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
@@ -13,7 +13,8 @@
     }
   ],
   "esmodules": [
-    "scripts/dtd-pf2e.js"
+    "scripts/dtd-pf2e.js",
+    "scripts/inventory.js"
   ],
   "relationships": {
     "systems": [

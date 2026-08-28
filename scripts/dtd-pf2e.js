@@ -139,7 +139,8 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", async () => {
-    game.modules.get(MODULE_ID).api = { install, toggleSectioned };
+    const module = game.modules.get(MODULE_ID);
+    module.api = { ...(module.api ?? {}), install, toggleSectioned };
 
     if (!game.user.isGM) return;
     if (!game.settings.get(MODULE_ID, "autoInstall")) return;

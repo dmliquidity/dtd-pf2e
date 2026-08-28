@@ -35,6 +35,59 @@ game.modules.get("dtd-pf2e").api.install();
 
 Re-running is safe — items are matched on slug, so nothing duplicates or gets overwritten.
 
+## Restocking shops at the table
+
+`/inventory 5` rolls a fresh, level-appropriate stock list for the selected shop and writes it
+onto the actor — no prep, no editing item lists mid-session.
+
+Select the shop's token (or have exactly one merchant sheet open) and type it in chat:
+
+```
+/inventory 5                  restock at level 5
+/inventory                    restock at the level last used for this shop, else party level
+/inventory 5 --add            keep what's on the shelves and add to it
+/inventory 5 --count 12       stock 12 items instead of the profile's default
+/inventory 5 --profile smith  force a profile
+/inventory undo               put the previous stock back
+/inventory list               show every profile and the shops using it
+```
+
+Only a GM can run it. Each restock whispers a GM card listing what landed on the shelves, the
+total value, and which profile it used.
+
+### What each shop sells
+
+`data/shop-profiles.json` maps every Sandpoint shop to a stocking profile — an armory draws arms,
+ammunition and runes; a tavern draws drink; a tannery draws leather and never anything magical.
+Shops match on name, so `16. The Pillbug's Pantry (Aliver Podiker)` still resolves to the
+premium-alchemist profile. Pin a profile to an actor permanently with:
+
+```js
+actor.setFlag("dtd-pf2e", "shopProfile", "alchemist_premium");
+```
+
+The level you pass is a ceiling. Profiles can cap lower — a tannery stays at level 1 whatever you
+type, because nobody sells a level-9 belt. Staple goods (rope at the general store, healing potions
+at the alchemist) are always stocked; a few top-end pieces are guaranteed so the level shows; the
+rest is weighted toward the cheap end, because a shop is mostly rope.
+
+Stock comes from the compendia named in the module settings (`pf2e.equipment-srd` by default) and,
+unless you turn it off, this world's own Items directory — which is how the homebrew food and drink
+reach the taverns.
+
+The profile file is generated from the campaign database:
+
+```bash
+source .venv/bin/activate && cd app && python build_shop_profiles.py
+```
+
+### From a macro
+
+```js
+const api = game.modules.get("dtd-pf2e").api;
+await api.restock(api.resolveShop(), { level: 5 });
+```
+
 ## The runes
 
 Eleven homebrew weapon property runes, item level 3–7. Full text lives in the

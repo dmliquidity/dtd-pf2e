@@ -1,0 +1,811 @@
+{
+  "profiles": {
+    "alchemist": {
+      "label": "Alchemist — bombs, elixirs and tools of the trade",
+      "count": 32,
+      "types": [
+        "consumable",
+        "weapon"
+      ],
+      "traitsAny": [
+        "alchemical"
+      ],
+      "excludeCategories": [
+        "poison",
+        "drug"
+      ],
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "healing-potion-minor",
+        "alchemists-fire-lesser",
+        "acid-flask-lesser",
+        "antidote-lesser",
+        "antiplague-lesser",
+        "smokestick-lesser"
+      ]
+    },
+    "alchemist_premium": {
+      "label": "Fine alchemist — the good shelf, and it costs",
+      "count": 40,
+      "types": [
+        "consumable",
+        "weapon"
+      ],
+      "traitsAny": [
+        "alchemical"
+      ],
+      "excludeCategories": [
+        "poison",
+        "drug"
+      ],
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "staples": [
+        "healing-potion-lesser",
+        "elixir-of-life-minor",
+        "alchemists-fire-moderate"
+      ]
+    },
+    "healer": {
+      "label": "Herbalist — what keeps people alive",
+      "count": 20,
+      "types": [
+        "consumable",
+        "equipment"
+      ],
+      "namePattern": "\\b(healing|elixir of life|antidote|antiplague|salve|poultice|bandage|remedy|panacea|soothing|restorative|smelling salts|medicine|healer)\\b",
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "healers-tools",
+        "healing-potion-minor",
+        "antidote-lesser",
+        "antiplague-lesser",
+        "elixir-of-life-minor"
+      ]
+    },
+    "temple": {
+      "label": "Temple — divine consumables and holy goods",
+      "count": 20,
+      "rarity": [
+        "common"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "consumable"
+          ],
+          "traitsAny": [
+            "divine",
+            "holy",
+            "healing"
+          ]
+        },
+        {
+          "types": [
+            "consumable",
+            "equipment"
+          ],
+          "namePattern": "\\b(healing|elixir of life|antidote|antiplague|salve|poultice|bandage|remedy|panacea|soothing|restorative|smelling salts|medicine|healer)\\b"
+        },
+        {
+          "types": [
+            "equipment",
+            "consumable"
+          ],
+          "namePattern": "\\b(holy water|incense|censer|religious symbol|prayer|candle|font)\\b"
+        }
+      ],
+      "staples": [
+        "holy-water",
+        "healing-potion-minor",
+        "healing-potion-lesser"
+      ]
+    },
+    "armory": {
+      "label": "Armory — arms, armour and ammunition",
+      "count": 34,
+      "rarity": [
+        "common"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "weapon",
+            "armor",
+            "shield"
+          ],
+          "traitsNone": [
+            "alchemical",
+            "magical"
+          ]
+        },
+        {
+          "types": [
+            "consumable"
+          ],
+          "categories": [
+            "ammo"
+          ]
+        },
+        {
+          "namePattern": "\\b(rune|striking|potency|resilient|property)\\b"
+        }
+      ],
+      "staples": [
+        "dagger",
+        "shortsword",
+        "longsword",
+        "leather-armor",
+        "chain-shirt",
+        "steel-shield",
+        "crossbow",
+        "bolts"
+      ]
+    },
+    "smith": {
+      "label": "Blacksmith — weapons, and the runes to go on them",
+      "count": 26,
+      "rarity": [
+        "common"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "weapon",
+            "armor",
+            "shield"
+          ],
+          "traitsNone": [
+            "alchemical",
+            "magical"
+          ]
+        },
+        {
+          "namePattern": "\\b(rune|striking|potency|resilient|property)\\b"
+        }
+      ],
+      "staples": [
+        "dagger",
+        "warhammer",
+        "greataxe",
+        "steel-shield"
+      ]
+    },
+    "leatherworker": {
+      "label": "Tanner — leather armour and leather goods",
+      "count": 20,
+      "types": [
+        "armor",
+        "equipment",
+        "backpack"
+      ],
+      "namePattern": "\\b(leather|hide|studded|backpack|pouch|sheath|bandolier|satchel|saddlebag|belt|boots)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 1,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "leather-armor",
+        "studded-leather-armor",
+        "backpack",
+        "belt-pouch"
+      ]
+    },
+    "clothier": {
+      "label": "Tailor — clothing, and the quiet non-metal armour",
+      "count": 20,
+      "types": [
+        "equipment",
+        "armor"
+      ],
+      "namePattern": "\\b(clothing|outfit|garb|dress|cloak|cape|coat|robe|hat|cap|boots|gloves|cosmetic|perfume|scarf|veil|mask|costume|jewelry)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 1,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "explorers-clothing",
+        "winter-clothing",
+        "fine-clothing"
+      ]
+    },
+    "boutique": {
+      "label": "Boutique — fine dress, and a dwarf who etches runes",
+      "count": 24,
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "equipment",
+            "armor",
+            "treasure"
+          ],
+          "namePattern": "\\b(clothing|outfit|garb|dress|cloak|cape|coat|robe|hat|cap|boots|gloves|cosmetic|perfume|scarf|veil|mask|costume|jewelry)\\b"
+        },
+        {
+          "namePattern": "\\b(rune|striking|potency|resilient|property)\\b"
+        }
+      ],
+      "staples": [
+        "fine-clothing",
+        "explorers-clothing"
+      ]
+    },
+    "curio": {
+      "label": "Curio dealer — talismans, oddities and things with warnings",
+      "count": 28,
+      "types": [
+        "equipment",
+        "consumable",
+        "treasure",
+        "weapon",
+        "armor"
+      ],
+      "traitsAny": [
+        "magical",
+        "talisman",
+        "invested",
+        "arcane",
+        "occult",
+        "primal",
+        "divine"
+      ],
+      "rarity": [
+        "common",
+        "uncommon"
+      ]
+    },
+    "arcanist": {
+      "label": "Cartographer & wizard — scrolls, wands and paper that knows things",
+      "count": 24,
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "consumable"
+          ],
+          "categories": [
+            "scroll",
+            "wand"
+          ]
+        },
+        {
+          "types": [
+            "equipment",
+            "backpack"
+          ],
+          "namePattern": "\\b(book|tome|folio|manual|formula|grimoire|spellbook|writing set|ink|paper|scroll case|material component|journal|almanac|chapbook|map|scroll)\\b"
+        }
+      ],
+      "staples": [
+        "writing-set",
+        "scroll-case",
+        "material-component-pouch"
+      ]
+    },
+    "bookseller": {
+      "label": "Bookseller — scrolls, books and writing supplies",
+      "count": 26,
+      "rarity": [
+        "common"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "consumable"
+          ],
+          "categories": [
+            "scroll"
+          ]
+        },
+        {
+          "types": [
+            "equipment",
+            "backpack"
+          ],
+          "namePattern": "\\b(book|tome|folio|manual|formula|grimoire|spellbook|writing set|ink|paper|scroll case|material component|journal|almanac|chapbook|map|scroll)\\b",
+          "traitsNone": [
+            "magical"
+          ]
+        }
+      ],
+      "staples": [
+        "writing-set",
+        "scroll-case",
+        "ink",
+        "parchment"
+      ]
+    },
+    "finds": {
+      "label": "Old adventurers' collection — what came back up out of the holes",
+      "count": 16,
+      "types": [
+        "equipment",
+        "weapon",
+        "armor",
+        "consumable",
+        "treasure"
+      ],
+      "traitsAny": [
+        "magical",
+        "invested",
+        "talisman"
+      ],
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "levelBias": 0.45
+    },
+    "jeweler": {
+      "label": "Jeweler — gems, rings and art objects",
+      "count": 20,
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "treasure"
+          ],
+          "excludeCategories": [
+            "coin"
+          ]
+        },
+        {
+          "types": [
+            "equipment"
+          ],
+          "namePattern": "\\b(gem|jewel|ring|necklace|pendant|amulet|circlet|bracelet|brooch|crown|art object|ivory|silver|gold|pearl|diamond|ruby|sapphire|emerald|opal|topaz)\\b"
+        }
+      ]
+    },
+    "general": {
+      "label": "General store — the boring-necessary shelf",
+      "count": 40,
+      "types": [
+        "equipment",
+        "backpack",
+        "consumable",
+        "weapon"
+      ],
+      "namePattern": "\\b(rope|torch|rations|bedroll|waterskin|backpack|sack|flint|tent|lantern|chalk|crowbar|grappling|piton|candle|soap|pouch|whistle|net|hammer|nails|oil|repair kit|tool|kit|chest|bucket|fishing|climbing|mirror|spyglass|arrow|bolt|bullet|shot|ammunition|sling)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 2,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "rope",
+        "torch",
+        "rations",
+        "bedroll",
+        "waterskin",
+        "backpack",
+        "flint-and-steel",
+        "chalk",
+        "candle",
+        "grappling-hook"
+      ]
+    },
+    "provisions": {
+      "label": "Food seller — provisions and the day's catch",
+      "count": 14,
+      "types": [
+        "consumable",
+        "equipment"
+      ],
+      "namePattern": "\\b(rations|feed|soup|stew|coffee|tea|wine|ale|beer|fish|salad|bread|cake|meat|tonic|jerky)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 3,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "rations",
+        "feed-standard"
+      ]
+    },
+    "tavern": {
+      "label": "Tavern — drink, food and a room over it",
+      "count": 12,
+      "types": [
+        "consumable"
+      ],
+      "namePattern": "\\b(wine|ale|beer|coffee|tea|spirits|liquor|brandy|mead|cordial|grog)\\b|\\b(rations|feed|soup|stew|coffee|tea|wine|ale|beer|fish|salad|bread|cake|meat|tonic|jerky)\\b",
+      "levelCap": 4,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "arbor-wine",
+        "bloodeye-coffee",
+        "rations"
+      ]
+    },
+    "drinks": {
+      "label": "Brewery — ale, wine and spirits by the cask",
+      "count": 10,
+      "types": [
+        "consumable"
+      ],
+      "namePattern": "\\b(wine|ale|beer|coffee|tea|spirits|liquor|brandy|mead|cordial|grog)\\b",
+      "levelCap": 4,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "arbor-wine",
+        "aged-arbor-wine"
+      ]
+    },
+    "festhall": {
+      "label": "Festhall — drink, games and small luxuries",
+      "count": 12,
+      "levelCap": 3,
+      "rarity": [
+        "common"
+      ],
+      "anyOf": [
+        {
+          "types": [
+            "consumable"
+          ],
+          "namePattern": "\\b(wine|ale|beer|coffee|tea|spirits|liquor|brandy|mead|cordial|grog)\\b"
+        },
+        {
+          "types": [
+            "equipment",
+            "treasure"
+          ],
+          "namePattern": "\\b(clothing|outfit|garb|dress|cloak|cape|coat|robe|hat|cap|boots|gloves|cosmetic|perfume|scarf|veil|mask|costume|jewelry)\\b|\\b(dice|cards|game|gaming|chess|knucklebones)\\b",
+          "traitsNone": [
+            "magical"
+          ]
+        }
+      ]
+    },
+    "travelgear": {
+      "label": "Wheelwright — wagons, carts and travel gear",
+      "count": 20,
+      "types": [
+        "equipment",
+        "backpack",
+        "consumable"
+      ],
+      "namePattern": "\\b(wagon|cart|carriage|wheelbarrow|sled|wheel|vehicle|caravan|travel|tent|bedroll)\\b|\\b(rope|torch|rations|bedroll|waterskin|backpack|sack|flint|tent|lantern|chalk|crowbar|grappling|piton|candle|soap|pouch|whistle|net|hammer|nails|oil|repair kit|tool|kit|chest|bucket|fishing|climbing|mirror|spyglass|arrow|bolt|bullet|shot|ammunition|sling)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 1,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "bedroll",
+        "tent-pup",
+        "rope",
+        "lantern-hooded"
+      ]
+    },
+    "stables": {
+      "label": "Stables — tack, feed and stabling",
+      "count": 16,
+      "types": [
+        "equipment",
+        "backpack",
+        "consumable"
+      ],
+      "namePattern": "\\b(saddle|bridle|barding|feed|horseshoe|tack|reins|riding|stabling|animal)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 1,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "saddle-riding",
+        "bit-and-bridle",
+        "feed-standard",
+        "saddlebags"
+      ]
+    },
+    "locksmith": {
+      "label": "Locksmith — locks, keys and the tools for both",
+      "count": 16,
+      "types": [
+        "equipment",
+        "backpack",
+        "consumable"
+      ],
+      "namePattern": "\\b(lock|padlock|manacle|shackle|thieves|lockpick|picks|key|trap|caltrops)\\b",
+      "traitsNone": [
+        "magical"
+      ],
+      "levelCap": 3,
+      "rarity": [
+        "common"
+      ],
+      "staples": [
+        "thieves-tools",
+        "lock-simple",
+        "lock-average",
+        "manacles-simple"
+      ]
+    }
+  },
+  "shops": [
+    {
+      "name": "Sandpoint Meat Market",
+      "match": "sandpointmeatmarket",
+      "keeper": "Chod Bevuk",
+      "type": "Butcher",
+      "sells": "Fresh & smoked meat",
+      "profile": "provisions"
+    },
+    {
+      "name": "Savah's Armory",
+      "match": "savahsarmory",
+      "keeper": "Savah Bevaniky",
+      "type": "Armorer",
+      "sells": "Armor, shields, weapons, ammo",
+      "profile": "armory"
+    },
+    {
+      "name": "Bottled Solutions",
+      "match": "bottledsolutions",
+      "keeper": "Nisk Tander",
+      "type": "Alchemist",
+      "sells": "Alchemical items",
+      "profile": "alchemist"
+    },
+    {
+      "name": "Sandpoint Savories",
+      "match": "sandpointsavories",
+      "keeper": "Alma Avertin",
+      "type": "Baker · confectioner",
+      "sells": "Baked goods, coffee, tea",
+      "profile": "provisions"
+    },
+    {
+      "name": "General Store",
+      "match": "generalstore",
+      "keeper": "Ven Vinder",
+      "type": "Grocer · general goods",
+      "sells": "Adventuring gear, ammo, sundries",
+      "profile": "general"
+    },
+    {
+      "name": "The Rusty Dragon",
+      "match": "therustydragon",
+      "keeper": "Bethana Corwin",
+      "type": "Inn · tavern (Ameiko's)",
+      "sells": "Meals, drinks, fine lodging",
+      "profile": "tavern"
+    },
+    {
+      "name": "Hannah's",
+      "match": "hannahs",
+      "keeper": "Hannah Velerin",
+      "type": "Herbalist · midwife · Cleric",
+      "sells": "Remedies, minor healing, divine spellcasting",
+      "profile": "healer"
+    },
+    {
+      "name": "Sandpoint Cathedral",
+      "match": "sandpointcathedral",
+      "keeper": "Abstalar Zantus",
+      "type": "Temple · Cleric (Desna)",
+      "sells": "Healing potions & elixirs, holy goods, remedies",
+      "profile": "temple"
+    },
+    {
+      "name": "The Feathered Serpent",
+      "match": "thefeatheredserpent",
+      "keeper": "Vorvashali Voon",
+      "type": "Curio dealer · fence",
+      "sells": "Curios, talismans, rare oddities",
+      "profile": "curio"
+    },
+    {
+      "name": "The Curious Goblin",
+      "match": "thecuriousgoblin",
+      "keeper": "Chask Haladan",
+      "type": "Bookseller",
+      "sells": "Books, scrolls, writing supplies",
+      "profile": "bookseller"
+    },
+    {
+      "name": "Risa's Place",
+      "match": "risasplace",
+      "keeper": "Lanalee Magravi",
+      "type": "Tavern",
+      "sells": "Drinks, Varisian fare",
+      "profile": "tavern"
+    },
+    {
+      "name": "The Way North",
+      "match": "thewaynorth",
+      "keeper": "Veznutt Parooh",
+      "type": "Cartographer · Wizard",
+      "sells": "Maps, blank scrolls, wands",
+      "profile": "arcanist"
+    },
+    {
+      "name": "Rings and Things",
+      "match": "ringsandthings",
+      "keeper": "Maver Kesk",
+      "type": "Jeweler · moneylender",
+      "sells": "Gems, rings, art objects",
+      "profile": "jeweler"
+    },
+    {
+      "name": "The Hagfish",
+      "match": "thehagfish",
+      "keeper": "Jargie Quinn",
+      "type": "Tavern",
+      "sells": "Drinks, fish, the famous wager",
+      "profile": "tavern"
+    },
+    {
+      "name": "Red Dog Smithy",
+      "match": "reddogsmithy",
+      "keeper": "Das Korvut",
+      "type": "Blacksmith · weaponsmith",
+      "sells": "Weapons",
+      "profile": "smith"
+    },
+    {
+      "name": "The Pillbug's Pantry",
+      "match": "thepillbugspantry",
+      "keeper": "Aliver Podiker",
+      "type": "Alchemist (premium)",
+      "sells": "Fine alchemical goods",
+      "profile": "alchemist_premium"
+    },
+    {
+      "name": "The Feedbag",
+      "match": "thefeedbag",
+      "keeper": "Jubrayl Vhiski",
+      "type": "Tavern (Bunyip Club)",
+      "sells": "Cheap drink, cheaper food",
+      "profile": "tavern"
+    },
+    {
+      "name": "The Pixie's Kitten",
+      "match": "thepixieskitten",
+      "keeper": "Kaye Tesarani",
+      "type": "Festhall · gambling & 'services'",
+      "sells": "Drinks, games & companionship",
+      "profile": "festhall"
+    },
+    {
+      "name": "Valdemar Fish Market",
+      "match": "valdemarfishmarket",
+      "keeper": "Turch Sterglus",
+      "type": "Fishmonger",
+      "sells": "Fresh catch of the day",
+      "profile": "provisions"
+    },
+    {
+      "name": "Grocer's Hall",
+      "match": "grocershall",
+      "keeper": "Olmur Danavakus",
+      "type": "Grocer",
+      "sells": "Provisions, feed, sundries",
+      "profile": "general"
+    },
+    {
+      "name": "Rovanky Tannery",
+      "match": "rovankytannery",
+      "keeper": "Larz Rovanky",
+      "type": "Tanner · leatherworker",
+      "sells": "Leather armor & goods",
+      "profile": "leatherworker"
+    },
+    {
+      "name": "Locksmith",
+      "match": "locksmith",
+      "keeper": "Volioker Briskalberd",
+      "type": "Locksmith",
+      "sells": "Locks, keys, tools",
+      "profile": "locksmith"
+    },
+    {
+      "name": "Vernah's Fine Clothing",
+      "match": "vernahsfineclothing",
+      "keeper": "Rynshinn Povalli",
+      "type": "Tailor · clothier",
+      "sells": "Clothing & outfits",
+      "profile": "clothier"
+    },
+    {
+      "name": "Wheen's Wagons",
+      "match": "wheenswagons",
+      "keeper": "Bilivar Wheen",
+      "type": "Wheelwright · wagons",
+      "sells": "Wagons, carts, travel gear",
+      "profile": "travelgear"
+    },
+    {
+      "name": "Two Knight Brewery",
+      "match": "twoknightbrewery",
+      "keeper": "Gaven Deverin",
+      "type": "Brewery",
+      "sells": "Ale, wine & spirits",
+      "profile": "drinks"
+    },
+    {
+      "name": "The White Deer",
+      "match": "thewhitedeer",
+      "keeper": "Garridan Viskalai",
+      "type": "Inn · tavern",
+      "sells": "Meals, drinks, lodging",
+      "profile": "tavern"
+    },
+    {
+      "name": "Cracktooth's Tavern",
+      "match": "cracktoothstavern",
+      "keeper": "Jesk Berinni",
+      "type": "Tavern",
+      "sells": "Drinks & meals",
+      "profile": "tavern"
+    },
+    {
+      "name": "Goblin Squash Stables",
+      "match": "goblinsquashstables",
+      "keeper": "Daviren Hosk",
+      "type": "Stables",
+      "sells": "Tack, feed, stabling",
+      "profile": "stables"
+    },
+    {
+      "name": "Sandpoint Market",
+      "match": "sandpointmarket",
+      "keeper": "Jewels",
+      "type": "Open market",
+      "sells": "General goods & produce",
+      "profile": "general"
+    },
+    {
+      "name": "Sandpoint Boutique",
+      "match": "sandpointboutique",
+      "keeper": "Murkal",
+      "type": "Boutique · fashion",
+      "sells": "Fine clothes, accessories, runestones & rune work (transfer / etching)",
+      "profile": "boutique"
+    },
+    {
+      "name": "Runewatchers",
+      "profile": "finds",
+      "sells": "Gear found by scholars who used to be adventurers",
+      "match": "runewatchers",
+      "keeper": null,
+      "type": null
+    }
+  ]
+}

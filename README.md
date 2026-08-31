@@ -71,6 +71,12 @@ type, because nobody sells a level-9 belt. Staple goods (rope at the general sto
 at the alchemist) are always stocked; a few top-end pieces are guaranteed so the level shows; the
 rest is weighted toward the cheap end, because a shop is mostly rope.
 
+Any shop that could plausibly sell healing — both alchemists, Hannah's and the cathedral —
+**always stocks every grade of healing potion at or below the level**, guaranteed, ahead of
+everything else and not subject to the item count. At level 7 that is Minor, Lesser and Moderate;
+at level 3, Minor and Lesser. The alchemists carry Elixirs of Life on the same terms. A party
+should never be unable to buy healing because the dice didn't offer any.
+
 A shop that carries a graded item carries the **best grade it can get**: stock Elixir of Life
 (Minor) at 7th level and the (Lesser) comes with it, because level weighting alone buries the
 upgrades — level 5 is three times less likely to be drawn than level 1, so the expensive shelf

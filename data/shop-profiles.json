@@ -17,6 +17,10 @@
       "rarity": [
         "common"
       ],
+      "alwaysStock": [
+        "healing-potion",
+        "elixir-of-life"
+      ],
       "staples": [
         "healing-potion-minor",
         "alchemists-fire-lesser",
@@ -45,6 +49,10 @@
         "uncommon"
       ],
       "levelBias": 0.3,
+      "alwaysStock": [
+        "healing-potion",
+        "elixir-of-life"
+      ],
       "staples": [
         "healing-potion-lesser",
         "elixir-of-life-minor",
@@ -61,6 +69,10 @@
       "namePattern": "\\b(healing|elixir of life|antidote|antiplague|salve|poultice|bandage|remedy|panacea|soothing|restorative|smelling salts|medicine|healer)\\b",
       "rarity": [
         "common"
+      ],
+      "alwaysStock": [
+        "healing-potion",
+        "elixir-of-life"
       ],
       "staples": [
         "healers-tools",
@@ -101,6 +113,9 @@
           ],
           "namePattern": "\\b(holy water|incense|censer|religious symbol|prayer|candle|font)\\b"
         }
+      ],
+      "alwaysStock": [
+        "healing-potion"
       ],
       "staples": [
         "holy-water",

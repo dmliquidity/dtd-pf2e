@@ -175,6 +175,20 @@ function familyOf(slug) {
 }
 
 /**
+ * Families the shop always carries in full: every grade at or below the level
+ * cap, guaranteed ahead of everything else and not subject to the item count.
+ * A party should never be unable to buy healing because the weighting happened
+ * not to offer any.
+ */
+function addFullLadders(pool, take, families) {
+    for (const family of families ?? []) {
+        for (const entry of pool) {
+            if (familyOf(entry.slug) === family) take(entry);
+        }
+    }
+}
+
+/**
  * A shop that carries a graded item carries the best grade it can get hold of.
  * Without this the level weighting buries the upgrades: a 7th-level alchemist
  * stocks Elixir of Life (Minor) and never the Lesser sitting right beside it in
@@ -206,6 +220,8 @@ function chooseStock(pool, profile, count, cap) {
     const take = (entry) => {
         if (entry && !chosen.has(entry.slug)) chosen.set(entry.slug, entry);
     };
+
+    addFullLadders(pool, take, profile.alwaysStock);
 
     for (const slug of profile.staples ?? []) {
         if (chosen.size >= count) break;

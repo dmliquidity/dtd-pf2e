@@ -55,6 +55,13 @@ Select the shop's token (or have exactly one merchant sheet open) and type it in
 Only a GM can run it. Each restock whispers a GM card listing what landed on the shelves, the
 total value, and which profile it used.
 
+`/inventory undo` reverses the last run either way — replacing *or* adding — restoring the shop
+to exactly how it stood before the command.
+
+Flags tolerate the chat box's smart typography: it rewrites `--` as an em dash as you type, so
+`--add`, `—add`, `–add` and `-a` are all accepted. Anything the parser doesn't recognise is
+reported rather than silently ignored.
+
 ### What each shop sells
 
 `data/shop-profiles.json` maps every Sandpoint shop to a stocking profile — an armory draws arms,

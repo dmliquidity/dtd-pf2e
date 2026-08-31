@@ -343,16 +343,19 @@ async function restock(actor, { level, count, add = false, profile: requested } 
     const picked = chooseStock(pool, profile, wanted, cap);
     const hydrated = await hydrate(picked);
 
+    // Back up whatever is on the shelves either way: undo restores the shop to
+    // how it stood before the command, whether that command replaced or added.
     const previous = stockOf(actor);
+    if (previous.length <= MAX_BACKUP_ITEMS) {
+        await actor.setFlag(MODULE_ID, FLAG_BACKUP, {
+            at: Date.now(),
+            items: previous.map((i) => i.toObject()),
+        });
+    } else {
+        await actor.unsetFlag(MODULE_ID, FLAG_BACKUP);
+    }
+
     if (!add && previous.length) {
-        if (previous.length <= MAX_BACKUP_ITEMS) {
-            await actor.setFlag(MODULE_ID, FLAG_BACKUP, {
-                at: Date.now(),
-                items: previous.map((i) => i.toObject()),
-            });
-        } else {
-            await actor.unsetFlag(MODULE_ID, FLAG_BACKUP);
-        }
         await actor.deleteEmbeddedDocuments("Item", previous.map((i) => i.id));
     }
 
@@ -379,6 +382,7 @@ async function restock(actor, { level, count, add = false, profile: requested } 
         asked,
         add,
         replaced: add ? 0 : previous.length,
+        replacedCount: previous.length,
         pool: pool.length,
     });
 
@@ -391,21 +395,20 @@ async function undo(actor) {
         return null;
     }
     const backup = actor.getFlag(MODULE_ID, FLAG_BACKUP);
-    if (!backup?.items?.length) {
+    if (!Array.isArray(backup?.items)) {
         ui.notifications.warn(`DTD PF2e: no previous stock saved for ${actor.name}.`);
         return null;
     }
 
     const current = stockOf(actor);
     if (current.length) await actor.deleteEmbeddedDocuments("Item", current.map((i) => i.id));
-    const restored = await actor.createEmbeddedDocuments(
-        "Item",
-        backup.items.map((i) => {
+    const restored = backup.items.length
+        ? await actor.createEmbeddedDocuments("Item", backup.items.map((i) => {
             const data = foundry.utils.deepClone(i);
             delete data._id;
             return data;
-        })
-    );
+        }))
+        : [];
     await actor.unsetFlag(MODULE_ID, FLAG_BACKUP);
     ui.notifications.info(`DTD PF2e: restored ${restored.length} item(s) to ${actor.name}.`);
     return restored;
@@ -434,7 +437,7 @@ async function postCard(actor, info) {
 
     const capNote = info.cap < info.asked ? ` <em>(profile caps at ${info.cap})</em>` : "";
     const replacedNote = info.add
-        ? "added to the existing stock"
+        ? `added to ${info.replacedCount} item(s) already on the shelves — <code>/inventory undo</code> puts it back`
         : info.replaced
             ? `replaced ${info.replaced} item(s) — <code>/inventory undo</code> puts them back`
             : "shelves were empty";
@@ -506,18 +509,38 @@ async function listProfiles() {
 
 /* --------------------------------------------------------------- command -- */
 
+/**
+ * The chat box applies smart typography as you type, so "--add" arrives as
+ * "—add". Map every unicode dash back to a plain hyphen before parsing.
+ */
+function normalizeDashes(text) {
+    return String(text ?? "").replace(/[\u2010-\u2015\u2212]/g, "-");
+}
+
 function parse(argString) {
-    const opts = { add: false };
-    const tokens = argString.trim().split(/\s+/).filter(Boolean);
+    const opts = { add: false, unknown: [] };
+    const tokens = normalizeDashes(argString).trim().split(/\s+/).filter(Boolean);
 
     for (let i = 0; i < tokens.length; i++) {
-        const t = tokens[i];
-        if (t === "--add" || t === "-a") opts.add = true;
-        else if (t === "--count" || t === "-c") opts.count = Number(tokens[++i]);
-        else if (t === "--profile" || t === "-p") opts.profile = tokens[++i];
-        else if (/^undo$/i.test(t)) opts.undo = true;
-        else if (/^(list|profiles)$/i.test(t)) opts.list = true;
-        else if (/^\d+$/.test(t)) opts.level = Number(t);
+        const token = tokens[i];
+
+        // Any number of leading hyphens, so "-a", "--add" and a smart-dashed
+        // "—add" (now "-add") all land here.
+        const flag = /^-+([a-z]+)$/i.exec(token);
+        if (flag) {
+            switch (flag[1].toLowerCase()) {
+                case "a": case "add": opts.add = true; break;
+                case "c": case "count": opts.count = Number(tokens[++i]); break;
+                case "p": case "profile": opts.profile = tokens[++i]; break;
+                default: opts.unknown.push(token);
+            }
+            continue;
+        }
+
+        if (/^undo$/i.test(token)) opts.undo = true;
+        else if (/^(list|profiles)$/i.test(token)) opts.list = true;
+        else if (/^\d+$/.test(token)) opts.level = Number(token);
+        else opts.unknown.push(token);
     }
 
     if (opts.count !== undefined && !Number.isFinite(opts.count)) delete opts.count;
@@ -526,6 +549,10 @@ function parse(argString) {
 
 async function handle(argString) {
     const opts = parse(argString);
+    if (opts.unknown.length) {
+        ui.notifications.warn(
+            `DTD PF2e: ignored ${opts.unknown.join(", ")}. Flags are --add, --count N, --profile KEY.`);
+    }
     if (opts.list) return listProfiles();
 
     const actor = resolveShop();

@@ -164,6 +164,37 @@ async function buildPool(profile, cap, packIds) {
     return pool;
 }
 
+/** Grade suffixes PF2e uses for tiered consumables and items. */
+const GRADES = ["minor", "lesser", "moderate", "greater", "major", "true"];
+const GRADE_RGX = new RegExp(`-(${GRADES.join("|")})$`);
+
+/** "elixir-of-life-minor" -> "elixir-of-life"; null when the slug isn't graded. */
+function familyOf(slug) {
+    const match = GRADE_RGX.exec(slug ?? "");
+    return match ? slug.slice(0, match.index) : null;
+}
+
+/**
+ * A shop that carries a graded item carries the best grade it can get hold of.
+ * Without this the level weighting buries the upgrades: a 7th-level alchemist
+ * stocks Elixir of Life (Minor) and never the Lesser sitting right beside it in
+ * the pool, because level 5 is three times less likely to be drawn than level 1.
+ */
+function addBestTiers(pool, chosen, take, count) {
+    const best = new Map();
+    for (const entry of pool) {
+        const family = familyOf(entry.slug);
+        if (!family) continue;
+        const held = best.get(family);
+        if (!held || itemLevel(entry) > itemLevel(held)) best.set(family, entry);
+    }
+    for (const entry of [...chosen.values()]) {
+        if (chosen.size >= count) break;
+        const family = familyOf(entry.slug);
+        if (family) take(best.get(family));
+    }
+}
+
 /**
  * Choose the stock. Staples always make it, a handful of top-end pieces are
  * guaranteed so the level actually shows on the shelf, and the rest is weighted
@@ -180,6 +211,7 @@ function chooseStock(pool, profile, count, cap) {
         if (chosen.size >= count) break;
         take(pool.find((e) => e.slug === slug));
     }
+    addBestTiers(pool, chosen, take, count);
 
     const floor = Math.max(1, Math.ceil(cap * 0.6));
     const showcase = pool
@@ -189,6 +221,7 @@ function chooseStock(pool, profile, count, cap) {
     for (let i = 0; i < showcaseCount && showcase.length; i++) {
         take(showcase.splice(Math.floor(Math.random() * Math.min(6, showcase.length)), 1)[0]);
     }
+    addBestTiers(pool, chosen, take, count);
 
     const rest = pool.filter((e) => !chosen.has(e.slug));
     const weights = rest.map((e) => 1 / (1 + itemLevel(e) * bias));

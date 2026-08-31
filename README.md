@@ -71,6 +71,11 @@ type, because nobody sells a level-9 belt. Staple goods (rope at the general sto
 at the alchemist) are always stocked; a few top-end pieces are guaranteed so the level shows; the
 rest is weighted toward the cheap end, because a shop is mostly rope.
 
+A shop that carries a graded item carries the **best grade it can get**: stock Elixir of Life
+(Minor) at 7th level and the (Lesser) comes with it, because level weighting alone buries the
+upgrades — level 5 is three times less likely to be drawn than level 1, so the expensive shelf
+never appeared. Grades recognised: minor, lesser, moderate, greater, major, true.
+
 Stock comes from the compendia named in the module settings (`pf2e.equipment-srd` by default) and,
 unless you turn it off, this world's own Items directory — which is how the homebrew food and drink
 reach the taverns.

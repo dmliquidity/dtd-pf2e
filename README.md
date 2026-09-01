@@ -46,6 +46,7 @@ Select the shop's token (or have exactly one merchant sheet open) and type it in
 /inventory 5                  restock at level 5
 /inventory                    restock at the level last used for this shop, else party level
 /inventory 5 --add            keep what's on the shelves and add to it
+/inventory 5 --replace -c 5   sell 5 items on, bring 5 new in, leave the rest
 /inventory 5 --count 12       stock 12 items instead of the profile's default
 /inventory 5 --profile smith  force a profile
 /inventory undo               put the previous stock back
@@ -57,6 +58,12 @@ total value, and which profile it used.
 
 `/inventory undo` reverses the last run either way — replacing *or* adding — restoring the shop
 to exactly how it stood before the command.
+
+`--replace` rotates the shelf instead of resetting it — the shop looks like a week has passed
+rather than like it was rebuilt. `--count` sets how many items turn over (a quarter of the
+profile's stock list if you don't say). What sells is chosen at random, what comes in is never
+something the shop already had or has just sold, and anything in the profile's guaranteed stock is
+never rotated out — a party that could buy healing yesterday can buy it today.
 
 `--add` is a switch and takes no value. `/inventory 6 --add 5` reads that 5 as a **level**, not an
 item count, so it quietly restocks at 5 — you'll now get a warning when two levels are given. For a

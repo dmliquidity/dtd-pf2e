@@ -306,12 +306,23 @@ function partyLevel() {
     return levels.length ? Math.max(...levels) : 1;
 }
 
+/** Fisher-Yates, so a shop sells from all over the shelf, not just the front. */
+function shuffled(list) {
+    const out = [...list];
+    for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+}
+
 /** Everything sellable on the shop — on a loot actor that is all of it. */
 function stockOf(actor) {
     return actor.items.filter((i) => i.system?.quantity !== undefined);
 }
 
-async function restock(actor, { level, count, add = false, quiet = false, profile: requested } = {}) {
+async function restock(actor, { level, count, add = false, replace = false, quiet = false,
+                              profile: requested } = {}) {
     if (!game.user.isGM) {
         ui.notifications.warn("Only a GM can restock a shop.");
         return null;
@@ -329,9 +340,34 @@ async function restock(actor, { level, count, add = false, quiet = false, profil
         ? level
         : (actor.getFlag(MODULE_ID, FLAG_LEVEL) ?? partyLevel());
     const cap = Math.max(0, Math.min(asked, profile.levelCap ?? asked));
-    const wanted = count ?? profile.count ?? 24;
 
-    const pool = await buildPool(profile, cap, packSetting());
+    // In rotation mode the count is how much of the shelf turns over, so it
+    // defaults to a quarter of it rather than the profile's full stock list.
+    const wanted = count ?? (replace
+        ? Math.max(1, Math.round((profile.count ?? 24) * 0.25))
+        : profile.count ?? 24);
+
+    // Pick what sells on. Families the shop always carries are never rotated
+    // out — a party that could buy healing yesterday can buy it today.
+    const previous = stockOf(actor);
+    let removing = [];
+    let keep = previous;
+    if (replace && previous.length) {
+        const promised = new Set(profile.alwaysStock ?? []);
+        const rotatable = previous.filter((i) => !promised.has(familyOf(i.system?.slug)));
+        removing = shuffled(rotatable).slice(0, wanted);
+        const out = new Set(removing.map((i) => i.id));
+        keep = previous.filter((i) => !out.has(i.id));
+    }
+
+    let pool = await buildPool(profile, cap, packSetting());
+    if (replace) {
+        // Never restock what is still on the shelf (that would just make second
+        // copies), nor what has this moment sold — the point of a rotation is
+        // that the shelf looks different afterwards.
+        const held = new Set(previous.map((i) => i.system?.slug).filter(Boolean));
+        pool = pool.filter((e) => !held.has(e.slug));
+    }
     if (!pool.length) {
         ui.notifications.warn(
             `DTD PF2e: nothing matched the "${resolved.key}" profile at level ${cap}. ` +
@@ -343,9 +379,8 @@ async function restock(actor, { level, count, add = false, quiet = false, profil
     const picked = chooseStock(pool, profile, wanted, cap);
     const hydrated = await hydrate(picked);
 
-    // Back up whatever is on the shelves either way: undo restores the shop to
-    // how it stood before the command, whether that command replaced or added.
-    const previous = stockOf(actor);
+    // Back up whatever is on the shelves whichever mode ran: undo restores the
+    // shop to how it stood before the command.
     if (previous.length <= MAX_BACKUP_ITEMS) {
         await actor.setFlag(MODULE_ID, FLAG_BACKUP, {
             at: Date.now(),
@@ -355,7 +390,11 @@ async function restock(actor, { level, count, add = false, quiet = false, profil
         await actor.unsetFlag(MODULE_ID, FLAG_BACKUP);
     }
 
-    if (!add && previous.length) {
+    if (replace) {
+        if (removing.length) {
+            await actor.deleteEmbeddedDocuments("Item", removing.map((i) => i.id));
+        }
+    } else if (!add && previous.length) {
         await actor.deleteEmbeddedDocuments("Item", previous.map((i) => i.id));
     }
 
@@ -383,7 +422,10 @@ async function restock(actor, { level, count, add = false, quiet = false, profil
         cap,
         asked,
         add,
-        replaced: add ? 0 : previous.length,
+        replace,
+        rotated: removing.length,
+        kept: keep.length,
+        replaced: add || replace ? 0 : previous.length,
         replacedCount: previous.length,
         pool: pool.length,
     });
@@ -438,7 +480,10 @@ async function postCard(actor, info) {
         (sum, item, i) => sum + priceGp(entryFor(item, i)) * (item.system?.quantity ?? 1), 0);
 
     const capNote = info.cap < info.asked ? ` <em>(profile caps at ${info.cap})</em>` : "";
-    const replacedNote = info.add
+    const replacedNote = info.replace
+        ? `${info.rotated} sold on, ${info.created.length} new in, ${info.kept} left on the shelf ` +
+          "— <code>/inventory undo</code> puts it back"
+        : info.add
         ? `added to ${info.replacedCount} item(s) already on the shelves — <code>/inventory undo</code> puts it back`
         : info.replaced
             ? `replaced ${info.replaced} item(s) — <code>/inventory undo</code> puts them back`
@@ -520,7 +565,7 @@ function normalizeDashes(text) {
 }
 
 function parse(argString) {
-    const opts = { add: false, unknown: [] };
+    const opts = { add: false, replace: false, unknown: [] };
     const tokens = normalizeDashes(argString).trim().split(/\s+/).filter(Boolean);
 
     for (let i = 0; i < tokens.length; i++) {
@@ -532,6 +577,7 @@ function parse(argString) {
         if (flag) {
             switch (flag[1].toLowerCase()) {
                 case "a": case "add": opts.add = true; break;
+                case "r": case "replace": opts.replace = true; break;
                 case "c": case "count": opts.count = Number(tokens[++i]); break;
                 case "p": case "profile": opts.profile = tokens[++i]; break;
                 default: opts.unknown.push(token);
@@ -558,6 +604,10 @@ async function handle(argString) {
     if (opts.unknown.length) {
         ui.notifications.warn(
             `DTD PF2e: ignored ${opts.unknown.join(", ")}. Flags are --add, --count N, --profile KEY.`);
+    }
+    if (opts.add && opts.replace) {
+        ui.notifications.warn("DTD PF2e: --add and --replace are different modes; using --replace.");
+        opts.add = false;
     }
     if (opts.extraNumbers) {
         ui.notifications.warn(

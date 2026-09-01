@@ -58,6 +58,10 @@ total value, and which profile it used.
 `/inventory undo` reverses the last run either way — replacing *or* adding — restoring the shop
 to exactly how it stood before the command.
 
+`--add` is a switch and takes no value. `/inventory 6 --add 5` reads that 5 as a **level**, not an
+item count, so it quietly restocks at 5 — you'll now get a warning when two levels are given. For a
+count, say so: `/inventory 6 --add --count 5`.
+
 Flags tolerate the chat box's smart typography: it rewrites `--` as an em dash as you type, so
 `--add`, `—add`, `–add` and `-a` are all accepted. Anything the parser doesn't recognise is
 reported rather than silently ignored.
@@ -105,6 +109,33 @@ source .venv/bin/activate && cd app && python build_shop_profiles.py
 const api = game.modules.get("dtd-pf2e").api;
 await api.restock(api.resolveShop(), { level: 5 });
 ```
+
+`restock(actor, options)` takes `level`, `count`, `add`, `profile` and `quiet`. Pass `quiet: true`
+to skip the per-shop chat card — worth it when restocking more than one shop at once.
+
+**Shuffle every selected shop.** Select the shop tokens on the scene and run:
+
+```js
+const api = game.modules.get("dtd-pf2e").api;
+const level = 6;
+
+const shops = canvas.tokens.controlled.map(t => t.actor).filter(a => a?.type === "loot");
+if (!shops.length) return ui.notifications.warn("Select one or more shop tokens first.");
+
+const done = [];
+for (const shop of shops) {
+    const created = await api.restock(shop, { level, quiet: true });
+    done.push(`${shop.name} — ${created?.length ?? 0} items`);
+}
+
+ChatMessage.create({
+    whisper: ChatMessage.getWhisperRecipients("GM").map(u => u.id),
+    content: `<h3>Restocked at level ${level}</h3><p>${done.join("<br>")}</p>`,
+});
+```
+
+Each shop still picks its own profile by name, so one run restocks the armory with arms and the
+tavern with drink. `/inventory undo` works per shop afterwards, on whichever token you select.
 
 ## The runes
 

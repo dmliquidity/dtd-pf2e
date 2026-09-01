@@ -311,7 +311,7 @@ function stockOf(actor) {
     return actor.items.filter((i) => i.system?.quantity !== undefined);
 }
 
-async function restock(actor, { level, count, add = false, profile: requested } = {}) {
+async function restock(actor, { level, count, add = false, quiet = false, profile: requested } = {}) {
     if (!game.user.isGM) {
         ui.notifications.warn("Only a GM can restock a shop.");
         return null;
@@ -371,6 +371,8 @@ async function restock(actor, { level, count, add = false, profile: requested } 
     const created = await actor.createEmbeddedDocuments("Item", creates);
 
     await actor.setFlag(MODULE_ID, FLAG_LEVEL, asked);
+
+    if (quiet) return created;
 
     await postCard(actor, {
         created,
@@ -539,8 +541,12 @@ function parse(argString) {
 
         if (/^undo$/i.test(token)) opts.undo = true;
         else if (/^(list|profiles)$/i.test(token)) opts.list = true;
-        else if (/^\d+$/.test(token)) opts.level = Number(token);
-        else opts.unknown.push(token);
+        else if (/^\d+$/.test(token)) {
+            // A second bare number is nearly always "--add 5" meant as a count.
+            // Silently overwriting the level is the worst possible reading.
+            if (opts.level !== undefined) opts.extraNumbers = true;
+            opts.level = Number(token);
+        } else opts.unknown.push(token);
     }
 
     if (opts.count !== undefined && !Number.isFinite(opts.count)) delete opts.count;
@@ -552,6 +558,11 @@ async function handle(argString) {
     if (opts.unknown.length) {
         ui.notifications.warn(
             `DTD PF2e: ignored ${opts.unknown.join(", ")}. Flags are --add, --count N, --profile KEY.`);
+    }
+    if (opts.extraNumbers) {
+        ui.notifications.warn(
+            `DTD PF2e: more than one level given — using ${opts.level}. ` +
+            "--add takes no value; for an item count use --count N.");
     }
     if (opts.list) return listProfiles();
 

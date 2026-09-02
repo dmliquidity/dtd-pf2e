@@ -569,7 +569,7 @@ function normalizeDashes(text) {
 
 function parse(argString) {
     const opts = { add: false, replace: false, unknown: [] };
-    const tokens = normalizeDashes(argString).trim().split(/\s+/).filter(Boolean);
+    const tokens = normalizeDashes(cleanArgs(argString)).split(/\s+/).filter(Boolean);
 
     for (let i = 0; i < tokens.length; i++) {
         const token = tokens[i];
@@ -663,13 +663,35 @@ Hooks.once("ready", () => {
  * ChatLog.parse does — in v14 a typed command arrives as "<p>/inventory 5</p>".
  */
 function unwrap(message) {
-    return String(message ?? "")
-        .replace(/^<p>|<\/p>$/gi, "")
+    return cleanArgs(String(message ?? ""));
+}
+
+/**
+ * Strip the chat editor's markup out of a command's arguments.
+ *
+ * A typed command can arrive as "<p>/inventory 5</p><p></p>" or with a stray
+ * <br>, and without this the tags end up inside the argument string — a profile
+ * key of "alchemist</p><p>" matches nothing and reports nothing useful.
+ */
+function cleanArgs(text) {
+    return String(text ?? "")
+        .replace(/&nbsp;|\u00a0/gi, " ")
         .replace(/<br\s*\/?>/gi, " ")
+        .replace(/<\/?[a-z][^>]*>/gi, " ")
+        .replace(/&amp;/gi, "&")
+        .replace(/&lt;/gi, "<")
+        .replace(/&gt;/gi, ">")
+        .replace(/&quot;/gi, '"')
+        .replace(/&#0*39;|&apos;/gi, "'")
+        .replace(/\s{2,}/g, " ")
         .trim();
 }
 
-const COMMAND_RGX = /^(\/inv(?:entory)?)(?:\s+([^]*))?$/i;
+// The separator has to tolerate a literal &nbsp; entity: the chat editor
+// serialises some spaces that way, and \s does not match a six-character
+// HTML entity — which made "/inventory 5" fall through to chat while
+// "/inventory 5 --count 6" matched fine.
+const COMMAND_RGX = /^(\/inv(?:entory)?)(?:(?:\s|&nbsp;)+([^]*))?$/i;
 
 /** True once the command is registered on ChatLog, so the hook stands down. */
 let commandRegistered = false;

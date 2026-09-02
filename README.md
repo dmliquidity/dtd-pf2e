@@ -73,6 +73,10 @@ Flags tolerate the chat box's smart typography: it rewrites `--` as an em dash a
 `--add`, `—add`, `–add` and `-a` are all accepted. Anything the parser doesn't recognise is
 reported rather than silently ignored.
 
+`--profile lootcache` stocks homebrew items that live in no compendium, matched on a slug
+prefix rather than on type and traits. That is how the Runewatchers sell the Thassilonian
+oddments: fifty world items whose slugs all start `oddment-`, ten on the shelf at a time.
+
 ### What each shop sells
 
 `data/shop-profiles.json` maps every Sandpoint shop to a stocking profile — an armory draws arms,

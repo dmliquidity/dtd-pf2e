@@ -89,6 +89,9 @@ function matchesClause(entry, clause) {
     const sys = entry.system ?? {};
     if (clause.types && !clause.types.includes(entry.type)) return false;
 
+    // Homebrew stock that lives in no compendium is matched on its slug prefix.
+    if (clause.slugPrefix && !String(sys.slug ?? "").startsWith(clause.slugPrefix)) return false;
+
     const category = sys.category ?? null;
     if (clause.excludeCategories?.includes(category)) return false;
 

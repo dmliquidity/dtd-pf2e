@@ -371,6 +371,16 @@
       ],
       "levelBias": 0.45
     },
+    "lootcache": {
+      "label": "Thassilonian oddments — every one a key to a cache somewhere in the Pit",
+      "count": 10,
+      "slugPrefix": "oddment-",
+      "rarity": [
+        "common",
+        "uncommon"
+      ],
+      "levelBias": 0.4
+    },
     "jeweler": {
       "label": "Jeweler — gems, rings and art objects",
       "count": 20,
@@ -817,8 +827,8 @@
     },
     {
       "name": "Runewatchers",
-      "profile": "finds",
-      "sells": "Gear found by scholars who used to be adventurers",
+      "profile": "lootcache",
+      "sells": "Thassilonian oddments dug out of the Pit",
       "match": "runewatchers",
       "keeper": null,
       "type": null

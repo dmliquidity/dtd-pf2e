@@ -152,7 +152,7 @@ tavern with drink. `/inventory undo` works per shop afterwards, on whichever tok
 
 Eleven homebrew weapon property runes, item level 3–7. Full text lives in the
 **DTD Homebrew Runes** journal the module installs; they're also stocked as runestones at
-the Sandpoint Boutique (Murkal) loot actor.
+the Sandpoint Boutique (Merkal) loot actor — the shop now trades as Merkal's Magnificent Market.
 
 None of them exist in the PF2e system's rune dropdown — the system's rune tables aren't
 exposed on `CONFIG.PF2E`, so registering new ones would mean patching system internals and

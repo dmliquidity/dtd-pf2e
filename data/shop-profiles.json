@@ -5,7 +5,8 @@
       "count": 32,
       "types": [
         "consumable",
-        "weapon"
+        "weapon",
+        "ammo"
       ],
       "traitsAny": [
         "alchemical"
@@ -27,7 +28,22 @@
         "acid-flask-lesser",
         "antidote-lesser",
         "antiplague-lesser",
-        "smokestick-lesser"
+        "smokestick-lesser",
+        "elemental-ammunition-lesser-acid",
+        "elemental-ammunition-lesser-cold",
+        "elemental-ammunition-lesser-electricity",
+        "elemental-ammunition-lesser-fire",
+        "elemental-ammunition-lesser-poison",
+        "elemental-ammunition-moderate-acid",
+        "elemental-ammunition-moderate-cold",
+        "elemental-ammunition-moderate-electricity",
+        "elemental-ammunition-moderate-fire",
+        "elemental-ammunition-moderate-poison",
+        "elemental-ammunition-greater-acid",
+        "elemental-ammunition-greater-cold",
+        "elemental-ammunition-greater-electricity",
+        "elemental-ammunition-greater-fire",
+        "elemental-ammunition-greater-poison"
       ]
     },
     "alchemist_premium": {
@@ -818,10 +834,10 @@
       "profile": "general"
     },
     {
-      "name": "Sandpoint Boutique",
+      "name": "Merkal's Magnificent Market",
       "match": "sandpointboutique",
-      "keeper": "Murkal",
-      "type": "Boutique · fashion",
+      "keeper": "Merkal",
+      "type": "Runesmith · magical merchandise",
       "sells": "Fine clothes, accessories, runestones & rune work (transfer / etching)",
       "profile": "boutique"
     },
